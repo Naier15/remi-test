@@ -1,0 +1,1 @@
+cd app && uvicorn app.asgi:application && cd ..
