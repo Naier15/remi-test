@@ -19,10 +19,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+    'mptt',
+    'django_mptt_admin',
+    'debug_toolbar',
+
     'api.apps.ApiConfig',
-    'main.apps.MainConfig',
-    
-    'rest_framework'
+    'main.apps.MainConfig'
 ]
 
 MIDDLEWARE = [
@@ -34,15 +37,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
 
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
 
 ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -95,13 +99,14 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
-
-# STATICFILES_DIRS = (
-#     os.path.join(FRONTEND_DIR, "dist"),
-# )
+STATICFILES_DIRS = [
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

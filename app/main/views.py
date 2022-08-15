@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from asgiref.sync import sync_to_async
 
 import asyncio
 from time import sleep
@@ -26,8 +27,9 @@ def http_call_sync():
 
 
 # views
-async def index(request):
-    return HttpResponse("Hello, async Django!")
+@sync_to_async
+def index(request):
+    return render(request, 'main/main.html', {'title': 'Yo'})
 
 
 async def async_view(request):

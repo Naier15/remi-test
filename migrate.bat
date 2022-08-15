@@ -1,1 +1,1 @@
-cd app && python manage.py makemigrations && python manage.py migrate
+cd app && python manage.py makemigrations && python manage.py migrate && cd ..

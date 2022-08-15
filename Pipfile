@@ -10,6 +10,10 @@ uvicorn = "*"
 httpx = "*"
 psycopg2 = "*"
 django-cors-headers = "*"
+pillow = "*"
+django-mptt = "*"
+django-mptt-admin = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 
