@@ -1,3 +1,4 @@
+from pydoc import describe
 from django.db import models
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
@@ -38,11 +39,13 @@ class Promo(models.Model):
 
 class Product(models.Model):
     title = models.CharField('Название продукта', max_length=300, db_index=True)
+    description = models.TextField('Описание', blank=False, default=None, null=True)
     price = models.DecimalField('Цена', max_digits=10, decimal_places=2, blank=False, default=None, null=True)
     quantity = models.DecimalField('Количество', max_digits=10, decimal_places=1, blank=False, default=None, null=True)
     image = models.ImageField('Фотография', upload_to='static/photos/%Y/%m/%d', null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='products', null=True, blank=True, default=None, verbose_name='Категория')
+    category = TreeForeignKey(Category, on_delete=models.SET_NULL, related_name='products', null=True, blank=True, default=None, verbose_name='Категория')
     promo = models.ForeignKey(Promo, on_delete=models.SET_NULL, null=True, default=None, blank=True, verbose_name='Акция')
+    update = models.DateTimeField('Дата добавления', auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -50,6 +53,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+        ordering = ['update']
 
 
 class Customer(models.Model):

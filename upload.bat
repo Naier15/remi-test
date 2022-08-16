@@ -1,0 +1,1 @@
+cd app && python manage.py upload_db && cd ..

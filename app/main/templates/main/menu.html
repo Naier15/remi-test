@@ -1,0 +1,55 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}
+Главное меню
+{% endblock %}
+
+{% block main %}
+    {% include "main/header.html" %}
+
+    {% block content %}
+        <div class="nav-item offset">
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Вчерашние помидоры" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Искать</button>
+          </form>
+        </div>
+        <br/><br/>
+
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            
+            {% for product in products %}
+            <div class="col">
+                <div class="card mb-5 rounded-5 shadow">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">{{product.title}}</h4>
+                    </div>
+                    <div class="card-body my-card">
+                        {% if product.image %}
+                            <img class="product-image" src="{{product.image}}" alt="picture"/>
+                        {% else %}
+                            <img class="product-image" src="{% static 'main/img/none.jpg' %}" alt="picture"/>
+                        {% endif %}
+                        <div class="inner-card">
+                            <h1 class="card-title pricing-card-title">{{product.price}}<small class="text-muted fw-light">₽</small></h1>
+                            <ul class="list-unstyled mt-3 mb-1">
+                                {% if product.description %}
+                                    <li>{{product.description|truncatewords:15}}</li>
+                                {% endif %}
+                                <br/>
+                                <li>Осталось {{product.quantity}} шт.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-lg btn-outline-primary my-btn">В корзину</button>
+                </div>
+              </div>
+            {% endfor %}
+            
+        </div>
+    {% endblock content %}
+
+    {% include "main/footer.html" %}
+{% endblock %}
+
