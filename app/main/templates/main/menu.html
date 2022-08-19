@@ -42,14 +42,24 @@
                             </ul>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-lg btn-outline-primary my-btn">В корзину</button>
+                    <form action="{% url 'menu' %}" method="POST"> {% csrf_token %}
+                        <input type="hidden" name="title" value="{{product.title}}"/>
+                        <input type="hidden" name="id" value="{{product.id}}"/>
+                        <input type="hidden" name="quantity" value="{{product.quantity}}"/>
+                        <input type="hidden" name="price" value="{{product.price}}"/>
+                        <input type="hidden" name="image" value="{{product.image}}"/>
+                        <input type="hidden" name="description" value="{{product.description}}"/>
+                        <button type="submit" class="btn btn-lg btn-outline-primary my-btn add_item">Купить</button>
+                    </form>
                 </div>
-              </div>
+            </div>
             {% endfor %}
-            
+
+        </div>
+        <div class="nav justify-content-center border-bottom pb-3 mb-3">
+            <a class="btn btn-primary" href="#" id="scroll_top">↑ Наверх</a>
         </div>
     {% endblock content %}
 
     {% include "main/footer.html" %}
 {% endblock %}
-

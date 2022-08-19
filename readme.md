@@ -7,9 +7,12 @@ pipenv shell
 # To install all required packages
 pipenv sync
 
+
 # To start the server
 cd app && uvicorn app.asgi:application && cd ..
 
 
 # Login & password for admin
 # friend - 123
+# Command to upload data into database
+# python manage.py upload_db

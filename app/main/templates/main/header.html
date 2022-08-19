@@ -3,18 +3,20 @@
   <nav id="navbar-example2" class="navbar fixed-top px-3 mb-3 header">
     <div class="container">
       <img class="favicon" src="{% static 'main/img/favicon.jpg' %}" alt="icon" >
+      <div class="six"><h1><span>Магазин у дивана</span></h1></div>
       <div class="header-right">
         <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white border rounded-5 shadow-sm" id="pillNav2" role="tablist">
           <li class="nav-item" role="presentation">
-            <a href="{% url 'menu' %}" class="nav-link rounded-5 {{menu_active}}" id="home-tab2" aria-selected="true">Меню
-            <!-- <button  data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Меню</button> -->
-            </a>
+            <a href="{% url 'menu' %}" class="nav-link rounded-5 {{menu_active}} menu_link" id="home-tab2" aria-selected="true" tabindex="1">Меню</a>
           </li>
           <li class="nav-item" role="presentation">
-            <a href="{% url 'basket' %}" class="nav-link rounded-5 {{basket_active}}" id="profile-tab2" aria-selected="false" tabindex="-1">Корзина
-            <!-- <button class="nav-link rounded-5" id="profile-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" tabindex="-1">Корзина</button> -->
-            </a>
+            <a href="{% url 'basket' %}" class="nav-link rounded-5 {{basket_active}} basket_link" id="profile-tab2" aria-selected="false" tabindex="2">Корзина</a>
           </li>
+          {% if basket_count %}
+          <li class="circle">
+            <span class="basket-count">{{basket_count}}</span>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </div>

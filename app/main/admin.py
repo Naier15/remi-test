@@ -8,7 +8,7 @@ import main.models as models
 
 admin.site.site_title = 'Панель управления'
 admin.site.site_header = 'Панель управления'
-admin.site.index_title = 'Реми'
+admin.site.index_title = 'Магазин на диване'
 
 
 class CategoryAdmin(MPTTModelAdmin):
@@ -25,7 +25,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('title', 'price', 'quantity', 'get_photo', 'category', 'promo')
     list_display_links = ('title',)
     search_fields = ('title', 'category__title', 'description', 'promo')
-    list_editable = ('price', 'quantity', 'image', 'category', 'promo')
+    list_editable = ('price', 'quantity', 'category', 'promo')
     list_filter = ('title', 'promo', 'price')
     fields = ('title', 'description', 'price', 'quantity', 'category', 'promo', 'image', 'get_photo', 'update')
     readonly_fields = ('update', 'get_photo')
