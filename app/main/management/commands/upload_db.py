@@ -11,13 +11,6 @@ def get_img(path_to_imgs: str) -> str:
     imgs: str = path.join(settings.BASE_DIR, path_to_imgs)
     result: str = choice(listdir(imgs))
     return path_to_imgs + result
-    # result = path + choice(imgs)
-    # file = None
-
-    # with open(result, 'rb') as file:
-    #     file = file.read()
-    #     print(file)
-    # return file
 
 
 class Command(BaseCommand):
@@ -56,7 +49,7 @@ class Command(BaseCommand):
         phrases = ['сказка на яву', 'только у нас', 'выгодно', 'получается', 
                     'лучшее', 'за свои деньги', 'покупай скорее', 
                     'возьми скорее', 'и', 'только сегодня']
-        path_to_imgs = 'static\\photos\\2022\\08\\17\\'
+        path_to_imgs = r'static/photos/2022/08/17/'
 
         queries = [Product(title=f'Товар №{i}',
                          description=' '.join([choice(phrases) for _ in range(randint(5, 12))]).capitalize(),

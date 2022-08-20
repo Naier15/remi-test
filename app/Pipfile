@@ -8,12 +8,15 @@ django = "*"
 djangorestframework = "*"
 uvicorn = "*"
 httpx = "*"
-psycopg2 = "*"
 django-cors-headers = "*"
 pillow = "*"
 django-mptt = "*"
 django-mptt-admin = "*"
 django-debug-toolbar = "*"
+psycopg2-binary = "*"
+celery = "*"
+requests = "*"
+redis = "*"
 
 [dev-packages]
 

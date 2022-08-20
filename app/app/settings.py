@@ -68,11 +68,11 @@ ASGI_APPLICATION = 'app.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'remi',
-        'USER': 'postgres',
-        'PASSWORD': os.environ['PSQL_PASSWD'],
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'NAME': os.environ.get('POSTGRES_DB', 'remi'),
+        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '123'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+        'PORT': os.environ.get('POSTGRES_PORT', 5432),
     }
 }
 
@@ -111,3 +111,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    'currency_rates': {
+        'task': 'main.tasks.get_currency_rates',
+        'schedule': 15.0,
+    }
+}

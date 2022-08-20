@@ -1,0 +1,49 @@
+version: '3.9'
+services:
+    redis:
+        image: redis
+        restart: always
+        ports:
+            - 6379:6379
+
+    db:
+        image: postgres:14.3-alpine
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: 123
+            POSTGRES_USER: postgres
+            POSTGRES_DB: remi
+            PGDATA: C:\Users\User\Desktop\RemiTest\backup
+            POSTGRES_INITDB_ARGS: "-A md5"
+
+    django:
+        restart: always
+        build:
+            context: ./app
+        depends_on:
+            - db
+            - redis
+        env_file:
+            - ./.env.dev
+        ports:
+            - 8000:8000
+        volumes:
+            - ./app:/app
+        command: bash -c "pipenv run python manage.py migrate
+                            && pipenv run python manage.py upload_db
+                            && pipenv run python manage.py create_admin
+                            && pipenv run uvicorn app.asgi:application --host 0.0.0.0 --port 8000 --reload"
+
+    worker:
+        restart: always
+        build:
+            context: ./app
+        volumes:
+            - ./app:/app
+        command: pipenv run celery -A app worker -B -l INFO
+        depends_on:
+            - db
+            - redis
+            - django
