@@ -64,7 +64,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 ASGI_APPLICATION = 'app.asgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -118,9 +117,7 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
-CELERY_BEAT_SCHEDULE = {
-    'currency_rates': {
-        'task': 'main.tasks.get_currency_rates',
-        'schedule': 15.0,
-    }
-}
+
+RECIPIENTS_EMAIL = ['my-own-email@mysite.com']
+DEFAULT_FROM_EMAIL = 'my-own-email@mysite.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

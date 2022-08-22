@@ -106,8 +106,8 @@ html {
 .six {
     padding: 20px 20px;
     text-align: center;
-  }
-  .six h1 {
+}
+.six h1 {
     font-weight: 600;
     font-family: 'Merriweather', serif;
     position: relative;
@@ -117,25 +117,25 @@ html {
     color: #267dff;
     font-size: 22px;
     padding: .4em 1em .55em;
-  }
-  .six h1:before,
-  .six h1:after {
+}
+.six h1:before,
+.six h1:after {
     content: ""; 
     position: absolute;
     width: 60%;
     height: .1em;
     background: #8fbafa; 
-  }
-  .six h1:before {
+}
+.six h1:before {
     left: 0;
     top: 0;
-  }
-  .six h1:after {
+}
+.six h1:after {
     right: 0;
     bottom: 0;
-  }
-  .six h1 span:before,
-  .six h1 span:after {
+}
+.six h1 span:before,
+.six h1 span:after {
     content: ""; 
     position: absolute;
     width: .65em;
@@ -143,18 +143,76 @@ html {
     border: .13em solid #8fbafa;
     border-radius: 50%;
     box-sizing: border-box;
-  }
-  .six h1 span:before {
+}
+.six h1 span:before {
     top: -.55em;
     left: -.325em;
-  }
-  .six h1 span:after {
+}
+.six h1 span:after {
     bottom: -.55em;
     right: -.325em;
-  }
-  @media (max-width: 600px) {
+}
+@media (max-width: 600px) {
     .six h1 {font-size: 2em;}
-  }
-  @media (max-width: 450px) {
+}
+@media (max-width: 450px) {
     .six h1 {font-size: 1.5em;}
-  }
+}
+
+.currency {
+    display: flex;
+    flex-direction: column;
+    color: #267dff;
+}
+
+.updated_time {
+    font-size: 10px;
+}
+
+.total_price {
+    font-weight: 600;
+    font-family: 'Merriweather', serif;
+    font-size: 28px;
+    color: #267dff;
+}
+
+.total_money {
+    color: #157347;
+}
+
+.list_pages {
+	text-align: center;
+	margin: 0 0 20px 0;
+}
+.list_pages ul {
+	margin: 20px 0 0 0;
+	padding: 0;
+	list-style: none;
+}
+.list_pages ul li {
+	display: inline-block;
+	margin: 0 20px 0 0;
+}
+.list_pages a {
+	color: #000;
+	font-size: 24px;
+	text-decoration: none;
+}
+.list_pages .page_num, .page_num_selected {
+	display: inline-block;
+	width: 60px;
+	height: 44px;
+	border: 1px solid #d0d0d0;
+	border-radius: 30px;
+}
+.list_pages .page_num:hover {
+	box-shadow: 3px 3px 1px #d0d0d0; 
+}
+.list_pages .page_num_selected {
+	border: none;
+	color: #000;
+	font-size: 20px;
+}
+.list_pages .page_num_selected:hover {
+	box-shadow: none; 
+}

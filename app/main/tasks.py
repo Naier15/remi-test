@@ -1,13 +1,22 @@
 from app.celery import app
+from django.utils.timezone import localtime
+
 import requests
 
+from main.utils import Currency
+
+
 @app.task
-def get_currency_rates() -> tuple[float, float]:
+def get_currency_rates() -> bool:
     API_URL = 'https://cdn.cur.su/api/nbu.json'
 
-    resp = requests.get(API_URL).json()
-    rates = resp['rates']
-    USD_RUB = round(rates.get('RUB'), 2)
-    EUR_RUB = round(USD_RUB / rates.get('EUR'), 2)
-    print(USD_RUB, EUR_RUB)
-    return True
+    try:
+        resp: dict = requests.get(API_URL).json()
+        rates: dict = resp['rates']
+        USD_RUB: float = rates.get('RUB')
+        EUR_RUB: float = USD_RUB / rates.get('EUR')
+
+        Currency.load(USD_RUB, EUR_RUB)
+        return True
+    except:
+        return False

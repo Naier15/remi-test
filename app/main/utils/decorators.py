@@ -2,7 +2,6 @@ from django.db import connection, reset_queries
 import functools
 
 
-
 def query_counter(func):
 
     @functools.wraps(func)

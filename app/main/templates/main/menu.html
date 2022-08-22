@@ -56,6 +56,21 @@
             {% endfor %}
 
         </div>
+        <nav class="list_pages">
+            <ul>
+                {% for page in page_range %}
+                {% if page == current_page %}
+                <li class="page_num page_num_selected">
+                    <a class="page" href="?page={{page}}">{{page}}</a>
+                </li>
+                {% else %}
+                <li class="page_num">
+                    <a class="page" href="?page={{page}}">{{page}}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
         <div class="nav justify-content-center border-bottom pb-3 mb-3">
             <a class="btn btn-primary" href="#" id="scroll_top">↑ Наверх</a>
         </div>

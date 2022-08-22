@@ -3,6 +3,11 @@
   <nav id="navbar-example2" class="navbar fixed-top px-3 mb-3 header">
     <div class="container">
       <img class="favicon" src="{% static 'main/img/favicon.jpg' %}" alt="icon" >
+      <div class="currency">
+        <span>Доллар: {{dollar}}</span>
+        <span>Евро: {{euro}}</span>
+        <span class="updated_time"><i>Обновлено: {{minutes}} минут {{seconds}} секунд назад</i></span>
+      </div>
       <div class="six"><h1><span>Магазин у дивана</span></h1></div>
       <div class="header-right">
         <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white border rounded-5 shadow-sm" id="pillNav2" role="tablist">

@@ -31,9 +31,11 @@ services:
             - 8000:8000
         volumes:
             - ./app:/app
-        command: bash -c "pipenv run python manage.py migrate
+        command: bash -c "pipenv run python manage.py makemigrations
+                            && pipenv run python manage.py migrate
                             && pipenv run python manage.py upload_db
                             && pipenv run python manage.py create_admin
+                            && pipenv run pytest
                             && pipenv run uvicorn app.asgi:application --host 0.0.0.0 --port 8000 --reload"
 
     worker:
@@ -42,7 +44,7 @@ services:
             context: ./app
         volumes:
             - ./app:/app
-        command: pipenv run celery -A app worker -B -l INFO
+        command: pipenv run celery -A app worker -E -B -l INFO
         depends_on:
             - db
             - redis

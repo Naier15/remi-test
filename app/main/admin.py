@@ -38,10 +38,14 @@ class ProductAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Product, ProductAdmin)
 
+class PeerAdmin(admin.ModelAdmin):
+    list_display = ('idx', 'latitude', 'longitude', 'city', 'create_at')
+    readonly_fields = ('idx', 'latitude', 'longitude', 'city', 'create_at')
 
-
+admin.site.register(models.Peer, PeerAdmin)
 
 admin.site.register(models.Promo)
 admin.site.register(models.Basket)
 admin.site.register(models.Customer)
+
 

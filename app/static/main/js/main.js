@@ -38,6 +38,11 @@ $(function(){
 		localStorage.removeItem('scroll-pos-basket');
 		return true;
 	});
+
+	$(".page").on('click', function(){
+		localStorage.removeItem('scroll-pos-menu');
+		return true;
+	});
 	
 });
 

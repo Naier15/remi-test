@@ -58,7 +58,13 @@
                 </div>
             </div>
             {% endfor %}
+            
             <div class="nav justify-content-center border-bottom pb-3 mb-3" style="width:100%;">
+                <form class="container" action="{% url 'pay_basket' %}" method="POST"> {% csrf_token %}
+                    <div class="total_price">Общая сумма Вашей покупки составляет <span class="total_money">{{total_price}} рублей</span></div>
+                    <button type="submit" class="btn-lg btn btn-success my-btn mb-5">Оплатить</button>
+                </form>
+                <br/><br/>
                 <a class="btn btn-primary" href="#" id="scroll_top">↑ Наверх</a>
             </div>
             {% else %}

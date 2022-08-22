@@ -17,6 +17,10 @@ psycopg2-binary = "*"
 celery = "*"
 requests = "*"
 redis = "*"
+python-dateutil = "*"
+aiofiles = "*"
+fpdf = "*"
+pytest-django = "*"
 
 [dev-packages]
 
