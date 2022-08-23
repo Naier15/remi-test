@@ -131,3 +131,5 @@ media/
 *.pyc
 *.db
 *.pid
+
+images.tar

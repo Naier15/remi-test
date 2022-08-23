@@ -2,20 +2,38 @@ from django.shortcuts import render
 from django.core.handlers.asgi import ASGIRequest
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.views.generic import ListView
+from elasticsearch_dsl import Q
+from django.http import HttpResponse
 
+from main.documents import ProductDocument
 from main.models import Product
 from main.utils import query_counter, Currency, count_basket_items, \
                         update_basket, basket_action, calc_total_price
 
-
-def initialize(request):
-    if not request.session.get('basket'):
-        request.session['basket'] = {}
         
+class ExtraDataMixin:
+    @classmethod
+    def initialize(cls, request):
+        if not request.session.get('basket'):
+            request.session['basket'] = {}
+
+    @classmethod
+    def get_extra_data(cls, request):
+        basket: dict = request.session['basket']
+        basket_count = count_basket_items(basket)
+        dollar, euro, minutes, seconds = Currency.dump()
+        return {
+            'basket_count': basket_count,
+            'dollar': dollar,
+            'euro': euro,
+            'minutes': minutes,
+            'seconds': seconds,
+        }
 
 # views functions
 async def menu(request: ASGIRequest):
-    initialize(request)
+    ExtraDataMixin.initialize(request)
     
     if request.method == 'POST':
         item: dict = request.session['basket'].get(request.POST['id'])
@@ -50,7 +68,7 @@ async def menu(request: ASGIRequest):
 
 
 async def basket(request: ASGIRequest):
-    initialize(request)
+    ExtraDataMixin.initialize(request)
 
     if request.method == 'POST':
         basket: dict = request.session['basket']
@@ -58,17 +76,48 @@ async def basket(request: ASGIRequest):
         id = request.POST.get('id')
         request.session['basket'] = basket_action(basket, action, id)
 
-    dollar, euro, minutes, seconds = Currency.dump()
     basket: dict = request.session['basket']
     total_price = calc_total_price(basket)
+    extra_data = ExtraDataMixin.get_extra_data(request)
 
     context = {'menu_active': '',
                 'basket_active': 'active',
                 'basket': request.session['basket'],
-                'dollar': dollar,
-                'euro': euro,
-                'minutes': minutes,
-                'seconds': seconds,
                 'total_price': round(total_price, 2),
+                **extra_data
     }
     return render(request, 'main/basket.html', context=context)
+
+
+class SearchMenu(ExtraDataMixin, ListView):
+    template_name = 'main/menu.html'
+    document_class = ProductDocument
+
+    def generate_q_expression(self, query):
+        return Q(
+            'multi_match',
+            query=query,
+            fields=[
+                'title',
+                'description'
+            ],
+            fuzziness='auto'
+        )
+
+    def get(self, request, *args, **kwargs):
+        try:
+            query = request.GET.get('search')
+            q = self.generate_q_expression(query)
+            search = self.document_class.search().query(q)
+            response = search.execute()
+
+            print(f'[INFO] Found {response.hits.total.value} hit(s) for query: "{query}"')
+
+            extra_data = self.get_extra_data(self.request)
+            context = {
+                'products': search,
+                **extra_data
+            }
+            return render(request, self.template_name, context)
+        except Exception as e:
+            return HttpResponse(e, status=500)

@@ -10,15 +10,14 @@
 
     {% block content %}
         <div class="nav-item offset">
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Вчерашние помидоры" aria-label="Search">
+          <form action="{% url 'search' %}" class="d-flex" role="search">
+            <input class="form-control me-2" type="search" name="search" placeholder="Вчерашние помидоры" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Искать</button>
           </form>
         </div>
         <br/><br/>
-
+        {% if products %}
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-            
             {% for product in products %}
             <div class="col">
                 <div class="card mb-5 rounded-5 shadow">
@@ -54,8 +53,12 @@
                 </div>
             </div>
             {% endfor %}
-
         </div>
+        <div class="nav justify-content-center border-bottom pb-3 mb-3">
+            <a class="btn btn-primary" href="#" id="scroll_top">↑ Наверх</a>
+        </div>
+        {% endif %}
+
         <nav class="list_pages">
             <ul>
                 {% for page in page_range %}
@@ -71,9 +74,6 @@
                 {% endfor %}
             </ul>
         </nav>
-        <div class="nav justify-content-center border-bottom pb-3 mb-3">
-            <a class="btn btn-primary" href="#" id="scroll_top">↑ Наверх</a>
-        </div>
     {% endblock content %}
 
     {% include "main/footer.html" %}

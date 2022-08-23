@@ -1,12 +1,10 @@
-from django.http import HttpResponse, JsonResponse
-from django.core.handlers.asgi import ASGIRequest
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets, permissions
 
-from main.models import Peer
-
-
-async def get_orders(request: ASGIRequest):
-    return HttpResponse("Hello, async Django!  hf")
+from api.serializers import ProductSerializer
+from main.models import Peer, Product
+from main.utils import Currency
 
 
 @csrf_exempt
@@ -19,3 +17,20 @@ def receive_data(request):
         ip = request.POST.get('ip'),
     )
     return JsonResponse({'status': 'success'})
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.filter(quantity__gt=0.0)
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = ProductSerializer
+
+def get_currency_rates(request):
+    dollar, euro, minutes, seconds = Currency.dump()
+    return JsonResponse({
+        'status': 'success',
+        'data': {
+            'dollar': dollar,
+            'euro': euro,
+            'minutes': minutes,
+            'seconds': seconds
+        }})

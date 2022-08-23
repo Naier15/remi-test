@@ -1,18 +1,18 @@
-# If you haven't pipenv package to manage virtual environment
-pip install pipenv
+# To start services execute next commands
 
-# To activate virtual environment
-pipenv shell
+# Using images.tar folder
+docker load -i images.tar
+docker-compose up
 
-# To install all required packages
-pipenv sync
+# Without images.tar
+docker-compose up --build
 
 
-# To start the server
-cd app && uvicorn app.asgi:application && cd ..
+# Access available through localhost:8000 or {local ip}:8000
+# /      - directory for django ssr client
+# /vue   - directory for vue spa client
+# /admin - directory for admin site
 
 
 # Login & password for admin
 # friend - 123
-# Command to upload data into database
-# python manage.py upload_db

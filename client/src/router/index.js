@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Table from '@/components/Table.vue'
+import Menu from '@/components/Menu.vue'
+import Basket from '@/components/Basket.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'Table',
-    component: Table
-  }
+    path: '/vue',
+    name: 'Menu',
+    component: Menu
+  },
+  {
+    path: '/vue/basket',
+    name: 'Basket',
+    component: Basket
+  },
 ]
 
 const router = createRouter({

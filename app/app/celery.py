@@ -13,6 +13,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'currency_rates': {
         'task': 'main.tasks.get_currency_rates',
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(minute='*/3'),
     }
 }

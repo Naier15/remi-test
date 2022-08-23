@@ -8,8 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-x^lca_ryv6j3pzwngr^$*!t0m-y$#wkg!%=uk*0^-lw1j63*rq'
 
-DEBUG = True # Change to False in production
-CORS_ORIGIN_ALLOW_ALL = True # Change to False in production
+DEBUG = False # Change to False in production
+CORS_ORIGIN_ALLOW_ALL = False # Change to False in production
 
 ALLOWED_HOSTS = ['*']
 
@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'mptt',
     'django_mptt_admin',
     'debug_toolbar',
+    'django_elasticsearch_dsl',
 
     'api.apps.ApiConfig',
     'main.apps.MainConfig'
@@ -105,11 +106,19 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
 ]
 
+# print(os.path.join(BASE_DIR, 'client\\dist\\'))
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'elasticsearch'
+    },
+}
 
 CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"

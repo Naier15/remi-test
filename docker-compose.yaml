@@ -2,12 +2,14 @@ version: '3.9'
 services:
     redis:
         image: redis
+        container_name: redis
         restart: always
         ports:
             - 6379:6379
 
     db:
         image: postgres:14.3-alpine
+        container_name: db
         restart: always
         ports:
             - 5432:5432
@@ -18,13 +20,25 @@ services:
             PGDATA: C:\Users\User\Desktop\RemiTest\backup
             POSTGRES_INITDB_ARGS: "-A md5"
 
+    elasticsearch:
+        image: elasticsearch:7.17.4
+        restart: always
+        container_name: elasticsearch
+        ports:
+            - 9200:9200
+            - 9300:9300
+        environment:
+            - discovery.type=single-node
+
     django:
         restart: always
         build:
             context: ./app
+        container_name: django
         depends_on:
             - db
             - redis
+            - elasticsearch
         env_file:
             - ./.env.dev
         ports:
@@ -42,6 +56,7 @@ services:
         restart: always
         build:
             context: ./app
+        container_name: worker
         volumes:
             - ./app:/app
         command: pipenv run celery -A app worker -E -B -l INFO

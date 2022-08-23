@@ -2,7 +2,6 @@ from django.utils.timezone import localtime
 import aiofiles
 from dateutil.parser import parse
 
-
 class Currency:
     __file_path = r'./static/data/currencies.txt'
 

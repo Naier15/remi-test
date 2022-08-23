@@ -21,6 +21,9 @@ python-dateutil = "*"
 aiofiles = "*"
 fpdf = "*"
 pytest-django = "*"
+elasticsearch = "*"
+elasticsearch-dsl = "*"
+django-elasticsearch-dsl = "*"
 
 [dev-packages]
 
