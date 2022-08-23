@@ -1,6 +1,8 @@
 # To start services execute next commands
 
 # Using images.tar folder
+## Link for loading docker images https://drive.google.com/drive/folders/1bAByEkntsRlkf1do2BBGeTJ6buJWkGbV?usp=sharing
+## Put images into general folder with docker-compose.yaml file
 docker load -i images.tar
 docker-compose up
 
