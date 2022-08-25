@@ -11,8 +11,11 @@ Put images into general folder with docker-compose.yaml file.
 
 
 Access available through localhost:8000 or {local ip}:8000
+
     /      - url for django ssr client
+
     /vue   - url for vue spa client
+
     /admin - url for admin site
 
 
